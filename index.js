@@ -59,6 +59,25 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
+  console.log(request.body.name);
+  if (!request.body) {
+    return response.status(400).json({
+      error: "content missing"
+    });
+  } else if (
+    request.body.name == null ||
+    request.body.name == "" ||
+    request.body.number == null ||
+    request.body.number == ""
+  ) {
+    return response.status(400).json({
+      error: "missing name or number"
+    });
+  } else if (persons.map(p => p.name).includes(request.body.name)) {
+    return response.status(400).json({
+      error: "person already there"
+    });
+  }
   console.log("body", request.body);
   console.log("header", request.headers);
   const newId = Math.floor(Math.random() * 1000);
