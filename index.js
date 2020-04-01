@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+app.use(express.json());
 let persons = [
   {
     name: "jim",
@@ -56,6 +56,18 @@ app.delete("/api/persons/:id", (request, response) => {
   persons = persons.filter(p => p.id !== id);
 
   response.status(204).end();
+});
+
+app.post("/api/persons", (request, response) => {
+  console.log("body", request.body);
+  console.log("header", request.headers);
+  const newId = Math.floor(Math.random() * 1000);
+  const person = request.body;
+  console.log("person type", typeof person);
+  //person.concat({ id: newId });
+  const newPerson = Object.assign({}, person, { id: newId });
+  console.log(newPerson);
+  response.json(newPerson);
 });
 
 const PORT = 3001;
