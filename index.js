@@ -4,27 +4,27 @@ const app = express();
 let persons = [
   {
     name: "jim",
-    number: 083 - 1234567,
+    number: "083 - 1234567",
     id: 1
   },
   {
     name: "john",
-    number: 084 - 1234567,
+    number: "084 - 1234567",
     id: 2
   },
   {
     name: "jenny",
-    number: 085 - 1234567,
+    number: "085 - 1234567",
     id: 3
   },
   {
     name: "jill",
-    number: 086 - 1234567,
+    number: "086 - 1234567",
     id: 4
   },
   {
     name: "james",
-    number: 087 - 1234567,
+    number: "087 - 1234567",
     id: 5
   }
 ];
@@ -39,6 +39,17 @@ app.get("/info", (req, res) => {
 
 app.get("/api/persons", (req, res) => {
   res.json(persons);
+});
+
+app.get("/api/persons/:id", (request, response) => {
+  const id = +request.params.id;
+  console.log(id);
+  const person = persons.find(p => p.id === id);
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
 });
 
 const PORT = 3001;
