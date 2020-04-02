@@ -1,9 +1,26 @@
 const express = require("express");
 const app = express();
 var morgan = require("morgan");
-morgan("tiny");
-app.use(morgan("tiny"));
+morgan.token("inside", function(req, res) {
+  return JSON.stringify(req.body);
+});
+app.use(
+  morgan(function(tokens, req, res) {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, "content-length"),
+      "-",
+      tokens["response-time"](req, res),
+      "ms",
+      tokens.inside(req, res)
+    ].join(" ");
+  })
+);
+
 app.use(express.json());
+
 let persons = [
   {
     name: "jim",
@@ -62,7 +79,6 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
-  // console.log(request.body.name);
   if (!request.body) {
     return response.status(400).json({
       error: "content missing"
@@ -81,14 +97,9 @@ app.post("/api/persons", (request, response) => {
       error: "person already there"
     });
   }
-  //console.log("body", request.body);
-  // console.log("header", request.headers);
   const newId = Math.floor(Math.random() * 1000);
   const person = request.body;
-  //console.log("person type", typeof person);
-  //person.concat({ id: newId });
   const newPerson = Object.assign({}, person, { id: newId });
-  // console.log(newPerson);
   response.json(newPerson);
 });
 
