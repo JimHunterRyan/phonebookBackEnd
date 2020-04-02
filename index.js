@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+var morgan = require("morgan");
+morgan("tiny");
+app.use(morgan("tiny"));
 app.use(express.json());
 let persons = [
   {
@@ -59,7 +62,7 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
-  console.log(request.body.name);
+  // console.log(request.body.name);
   if (!request.body) {
     return response.status(400).json({
       error: "content missing"
@@ -78,14 +81,14 @@ app.post("/api/persons", (request, response) => {
       error: "person already there"
     });
   }
-  console.log("body", request.body);
-  console.log("header", request.headers);
+  //console.log("body", request.body);
+  // console.log("header", request.headers);
   const newId = Math.floor(Math.random() * 1000);
   const person = request.body;
-  console.log("person type", typeof person);
+  //console.log("person type", typeof person);
   //person.concat({ id: newId });
   const newPerson = Object.assign({}, person, { id: newId });
-  console.log(newPerson);
+  // console.log(newPerson);
   response.json(newPerson);
 });
 
