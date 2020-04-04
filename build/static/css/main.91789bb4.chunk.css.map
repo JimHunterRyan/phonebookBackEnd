@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,aACE,WAGF,CAEA,sBAJE,qBAAsB,CACtB,qBAOF,CAJA,SACE,SAGF","file":"main.91789bb4.chunk.css","sourcesContent":[".personAdded {\r\n  color: green;\r\n  background-color: blue;\r\n  border: 2px black solid;\r\n}\r\n\r\n.deleted {\r\n  color: red;\r\n  background-color: blue;\r\n  border: 2px black solid;\r\n}\r\n"]}
