@@ -1,9 +1,8 @@
 const express = require("express");
-const path = require("path");
 
 const app = express();
 const cors = require("cors");
-const publicPath = path.join(__dirname, "..", "public");
+
 app.use(cors());
 var morgan = require("morgan");
 morgan.token("inside", function (req, res) {
@@ -54,7 +53,7 @@ let persons = [
   },
 ];
 app.get("/", (req, res) => {
-  res.sendFile(path.join(publicPath, "build/index.html"));
+  res.send("<h1>Hello World!</h1>");
 });
 
 app.get("/info", (req, res) => {
